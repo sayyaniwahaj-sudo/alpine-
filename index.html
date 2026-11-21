@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alpine Ascents International | World-Class Mountain Guiding</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Montserrat & Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Font Awesome 6.5.2 (Facebook, Instagram, X-Twitter, WhatsApp, Threads) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            alpine: {
+              navy: '#060B16',
+              slate: '#0F172A',
+              ice: '#F8FAFC',
+              gold: '#F59E0B',
+              goldHover: '#D97706',
+            }
+          },
+          fontFamily: {
+            sans: ['Open Sans', 'sans-serif'],
+            display: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Page transition */
+    .page-view {
+      animation: pageReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes pageReveal {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Premium Navbar Link Hover Underline & Lift */
+    .nav-item-hover {
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-item-hover::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, #F59E0B, #FBBF24);
+      border-radius: 9999px;
+      transform: translateX(-50%);
+      transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-item-hover:hover {
+      color: #FBBF24;
+      transform: translateY(-1px);
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+    .nav-item-hover:hover::after {
+      width: 72%;
+    }
+    .nav-item-active {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.45);
+    }
+    .nav-item-active::after {
+      display: none;
+    }
+
+    /* Expeditions Hover Mega-Dropdown */
+    .nav-dropdown-wrapper:hover .nav-mega-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .nav-mega-menu {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Universal Navbar Item Hover & Dropdown Trigger */
+    .nav-hover-trigger {
+      position: relative;
+      transition: all 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-hover-trigger::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 3px;
+      width: 0;
+      height: 2px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #4ea8de, #f59e0b);
+      transform: translateX(-50%);
+      transition: width 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-hover-trigger:hover {
+      color: #fef08a;
+      background-color: rgba(78, 168, 222, 0.14);
+      transform: translateY(-1px);
+    }
+    .nav-hover-trigger:hover::after {
+      width: 68%;
+    }
+    .nav-hover-trigger:hover .nav-caret {
+      transform: rotate(180deg);
+      color: #f59e0b;
+    }
+    .nav-dropdown-panel {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-dropdown-wrapper:hover .nav-dropdown-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Translucent Alpine Glass Card Surface */
+    .alpine-glass-card {
+      background-color: rgba(11, 20, 38, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Crisp video rendering */
+    #globalBgVideo {
+      filter: contrast(1.06) saturate(1.12) brightness(0.95);
+    }
+  </style>
+</head>
+<body class="bg-alpine-navy text-slate-100 font-sans antialiased selection:bg-amber-500 selection:text-slate-950 min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <!-- ==================== GLOBAL HIGH-DEFINITION MOUNTAIN VIDEO BACKGROUND ON ALL PAGES ==================== -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none bg-slate-950" style="z-index: -2;">
+    <!-- Procedural Snowy Mountain Peak + Falling Snow Fallback Canvas (Always active as base or fallback when video stream is paused/unavailable) -->
+    <canvas id="snowMountainCanvas" class="fixed inset-0 w-screen h-screen object-cover"></canvas>
+    <video
+      id="globalBgVideo"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2070&q=90"
+      class="fixed inset-0 w-screen h-screen object-cover"
+      style="position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; pointer-events: none;"
+    >
+      <source id="videoSourcePrimary" src="https://videos.pexels.com/video-files/3015510/3015510-hd_1920_1080_24fps.mp4" type="video/mp4" />
+      <source id="videoSourceFallback" src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-snow-covered-mountains-32450-large.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <!-- Translucent Alpine Glass Overlay Over Background Video -->
+  <div class="fixed inset-0 pointer-events-none bg-gradient-to-b from-slate-950/45 via-slate-950/30 to-slate-950/65" style="z-index: -1;"></div>
+
+  <!-- Floating Mountain Video Scene & Playback Controller -->
+  <div class="fixed bottom-5 left-5 z-40 hidden sm:flex items-center gap-2 bg-slate-950/80 backdrop-blur-xl border border-white/15 px-3.5 py-2 rounded-full shadow-2xl text-xs">
+    <button id="videoToggleBtn" onclick="toggleBgVideo()" title="Play / Pause Mountain Video"
+            class="w-7 h-7 rounded-full bg-amber-500/20 hover:bg-amber-500 text-amber-400 hover:text-slate-950 flex items-center justify-center transition">
+      <i id="videoToggleIcon" class="fa-solid fa-pause text-[11px]"></i>
+    </button>
+    <span class="text-slate-400 font-semibold uppercase tracking-wider text-[10px] pl-1">Alpine Cam:</span>
+    <button onclick="switchMountainVideo(0)" id="camBtn0" class="cam-btn px-2.5 py-1 rounded-full bg-amber-500 text-slate-950 font-bold text-[10px] uppercase transition">Snow Peaks</button>
+    <button onclick="switchMountainVideo(1)" id="camBtn1" class="cam-btn px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 text-slate-300 font-bold text-[10px] uppercase transition">Glacier Ridge</button>
+    <button onclick="switchMountainVideo(2)" id="camBtn2" class="cam-btn px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 text-slate-300 font-bold text-[10px] uppercase transition">Summit Snow</button>
+  </div>
+
+  <!-- ==================== 1. SLEEK TOP UTILITY & SOCIAL BAR ==================== -->
+  <div class="relative z-50 bg-slate-950/85 backdrop-blur-xl text-slate-300 text-xs border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2">
+      <!-- Left Contact Info: Cell No, Email, Address -->
+      <div class="flex items-center flex-wrap gap-3 sm:gap-5">
+        <a href="tel:+923133118712" class="flex items-center gap-1.5 hover:text-amber-400 transition group">
+          <i class="fa-solid fa-phone text-amber-400 group-hover:scale-110 transition"></i>
+          <span class="font-semibold tracking-wide">0313 3118712</span>
+        </a>
+        <span class="hidden sm:inline text-white/15">|</span>
+        <a href="mailto:sayyaniwahaj@gmail.com" class="flex items-center gap-1.5 hover:text-amber-400 transition group">
+          <i class="fa-solid fa-envelope text-amber-400 group-hover:scale-110 transition"></i>
+          <span class="font-medium">sayyani wahaj &bull; sayyaniwahaj@gmail.com</span>
+        </a>
+        <span class="hidden xl:inline text-white/15">|</span>
+        <button onclick="navigateTo('contact')" class="hidden xl:flex items-center gap-1.5 hover:text-amber-400 transition">
+          <i class="fa-solid fa-location-dot text-amber-400"></i>
+          <span>Aptech North Karachi</span>
+        </button>
+      </div>
+
+      <!-- Right Social Media Icons: Facebook, Instagram, Twitter/X, WhatsApp, Threads -->
+      <div class="flex items-center gap-2 ml-auto sm:ml-0">
+        <span class="hidden md:inline text-[10px] uppercase tracking-[0.2em] text-slate-400 mr-1 font-bold">Connect:</span>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"
+           class="w-7 h-7 rounded-full bg-white/5 border border-white/10 hover:bg-[#1877F2] hover:border-[#1877F2] text-slate-200 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/40">
+          <i class="fa-brands fa-facebook-f text-xs"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"
+           class="w-7 h-7 rounded-full bg-white/5 border border-white/10 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-pink-600 hover:to-purple-600 hover:border-pink-500 text-slate-200 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-pink-600/40">
+          <i class="fa-brands fa-instagram text-xs"></i>
+        </a>
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" title="Twitter / X"
+           class="w-7 h-7 rounded-full bg-white/5 border border-white/10 hover:bg-black hover:border-slate-400 text-slate-200 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+          <i class="fa-brands fa-x-twitter text-xs"></i>
+        </a>
+        <a href="https://wa.me/923133118712?text=Hello%20sayyani%20wahaj%20(Alpine%20Ascents),%20I%20would%20like%20information%20about%20an%20expedition." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp: 0313 3118712"
+           class="w-7 h-7 rounded-full bg-white/5 border border-white/10 hover:bg-[#25D366] hover:border-[#25D366] text-slate-200 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/40">
+          <i class="fa-brands fa-whatsapp text-xs"></i>
+        </a>
+        <a href="https://threads.net" target="_blank" rel="noopener noreferrer" aria-label="Threads" title="Threads"
+           class="w-7 h-7 rounded-full bg-white/5 border border-white/10 hover:bg-neutral-900 hover:border-white/50 text-slate-200 hover:text-white flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+          <i class="fa-brands fa-threads text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. LUXURY GLASSMORPHIC STICKY NAVBAR WITH HOVER EFFECTS ==================== -->
+  <header class="sticky top-0 z-50 bg-slate-950/75 backdrop-blur-2xl border-b border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.55)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Custom Little Mountain SVG Emblem + Brand Identity -->
+        <button onclick="navigateTo('home')" class="flex items-center gap-3.5 group text-left focus:outline-none">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4ea8de] via-slate-800 to-amber-600 p-[1.5px] shadow-lg shadow-[#4ea8de]/25 group-hover:scale-105 group-hover:shadow-amber-500/40 transition-all duration-300">
+            <div class="w-full h-full rounded-[14px] bg-slate-950/95 flex items-center justify-center">
+              <!-- Little Mountain Peak Emblem SVG -->
+              <svg class="w-7 h-7 transition-transform duration-300 group-hover:-translate-y-0.5" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 29L13.5 10L19.5 21L24 14L33 29H3Z" fill="#1e293b" stroke="#4ea8de" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M13.5 10L17.2 16.8L14.8 15.8L13.5 17.5L12.2 15.8L9.8 16.8L13.5 10Z" fill="#ffffff"/>
+                <path d="M24 14L26.8 19.2L24.8 18.4L24 19.8L23.2 18.4L21.2 19.2L24 14Z" fill="#f59e0b"/>
+                <path d="M6 29L13.5 15.5L21 29H6Z" fill="#4ea8de" fill-opacity="0.22"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <span class="block font-display text-lg sm:text-xl font-black tracking-wider text-white uppercase leading-none group-hover:text-[#4ea8de] transition">
+              Alpine Ascents
+            </span>
+            <span class="block text-[10px] tracking-[0.28em] text-amber-400 uppercase font-bold mt-1">
+              International
+            </span>
+          </div>
+        </button>
+
+        <!-- Desktop Navigation Links with Rich Hover States & Hover Dropdowns Across All Items -->
+        <nav class="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
+          <!-- Home with Hover Dropdown -->
+          <div class="relative nav-dropdown-wrapper">
+            <button data-nav="home" onclick="navigateTo('home')" class="nav-link nav-item-hover nav-hover-trigger px-3.5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold text-slate-100 flex items-center gap-1">
+              <span>Home</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-[#4ea8de] nav-caret transition-transform duration-200"></i>
+            </button>
+            <div class="nav-dropdown-panel absolute left-0 top-full pt-2.5 w-64 z-50">
+              <div class="bg-slate-950/95 backdrop-blur-2xl rounded-2xl border border-[#4ea8de]/30 p-3.5 shadow-2xl space-y-1">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-[#4ea8de] px-2.5 pb-1.5 border-b border-white/10">Alpine Overview</div>
+                <button onclick="navigateTo('home')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-[#4ea8de]/15 text-xs font-semibold text-slate-200 hover:text-amber-300 transition flex items-center justify-between">
+                  <span>Summit Hero &amp; Finder</span>
+                  <i class="fa-solid fa-arrow-right text-[10px] text-amber-400"></i>
+                </button>
+                <button onclick="switchMountainVideo(0)" class="w-full text-left px-3 py-2 rounded-xl hover:bg-[#4ea8de]/15 text-xs font-semibold text-slate-200 hover:text-amber-300 transition flex items-center justify-between">
+                  <span>Snow Peaks Live Cam</span>
+                  <i class="fa-solid fa-video text-[10px] text-[#4ea8de]"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expeditions Item with Hover Mega-Dropdown -->
+          <div class="relative nav-dropdown-wrapper">
+            <button data-nav="expeditions" onclick="navigateTo('expeditions')" class="nav-link nav-item-hover nav-hover-trigger px-3.5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold text-slate-100 flex items-center gap-1.5">
+              <span>Expeditions</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-amber-400 nav-caret transition-transform duration-200"></i>
+            </button>
+
+            <!-- Hover Mega Menu -->
+            <div class="nav-mega-menu absolute left-0 top-full pt-3 w-[480px] z-50">
+              <div class="bg-slate-950/95 backdrop-blur-2xl rounded-2xl border border-white/15 p-5 shadow-2xl">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+                  <span class="text-[11px] font-bold uppercase tracking-widest text-amber-400">Expeditions by Mountain Range</span>
+                  <button onclick="navigateTo('expeditions')" class="text-[11px] font-bold text-[#4ea8de] hover:text-amber-400 transition">View All 9 &rarr;</button>
+                </div>
+                <div class="grid grid-cols-2 gap-2.5 text-left">
+                  <button onclick="quickFilterRegion('Asia/Himalayas')" class="p-3 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-transparent hover:border-amber-500/40 transition group">
+                    <div class="font-display text-xs font-bold text-white uppercase group-hover:text-amber-300">Himalayas &amp; Karakoram</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Everest, Cho Oyu, Ama Dablam</div>
+                  </button>
+                  <button onclick="quickFilterRegion('North America')" class="p-3 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-transparent hover:border-amber-500/40 transition group">
+                    <div class="font-display text-xs font-bold text-white uppercase group-hover:text-amber-300">North America</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Denali &amp; Mount Rainier</div>
+                  </button>
+                  <button onclick="quickFilterRegion('South America')" class="p-3 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-transparent hover:border-amber-500/40 transition group">
+                    <div class="font-display text-xs font-bold text-white uppercase group-hover:text-amber-300">South America Andes</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Aconcagua, Cotopaxi, Chimborazo</div>
+                  </button>
+                  <button onclick="quickFilterRegion('Europe')" class="p-3 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-transparent hover:border-amber-500/40 transition group">
+                    <div class="font-display text-xs font-bold text-white uppercase group-hover:text-amber-300">European Alps &amp; Africa</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Mont Blanc &amp; Kilimanjaro</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- School & Training with Hover Dropdown -->
+          <div class="relative nav-dropdown-wrapper">
+            <button data-nav="school" onclick="navigateTo('school')" class="nav-link nav-item-hover nav-hover-trigger px-3.5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold text-slate-100 flex items-center gap-1">
+              <span>School &amp; Training</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-[#4ea8de] nav-caret transition-transform duration-200"></i>
+            </button>
+            <div class="nav-dropdown-panel absolute left-0 top-full pt-2.5 w-72 z-50">
+              <div class="bg-slate-950/95 backdrop-blur-2xl rounded-2xl border border-[#4ea8de]/30 p-3.5 shadow-2xl space-y-1">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-[#4ea8de] px-2.5 pb-1.5 border-b border-white/10">Training &amp; Outfitting</div>
+                <button onclick="navigateTo('school')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-amber-500/15 text-xs font-semibold text-slate-200 hover:text-amber-300 transition">
+                  Glacier &amp; Crevasse Rescue Courses
+                </button>
+                <button onclick="navigateTo('school')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-amber-500/15 text-xs font-semibold text-slate-200 hover:text-amber-300 transition">
+                  Denali &amp; 8,000m Expedition Prep
+                </button>
+                <button onclick="openGearModal()" class="w-full text-left px-3 py-2 rounded-xl hover:bg-[#4ea8de]/15 text-xs font-semibold text-[#4ea8de] hover:text-amber-300 transition flex items-center justify-between">
+                  <span>Mandatory Gear List Portal</span>
+                  <i class="fa-solid fa-person-hiking text-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Schedule 2026/27 with Hover Dropdown -->
+          <div class="relative nav-dropdown-wrapper">
+            <button data-nav="schedule" onclick="navigateTo('schedule')" class="nav-link nav-item-hover nav-hover-trigger px-3.5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold text-slate-100 flex items-center gap-1">
+              <span>Schedule 2026/27</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-amber-400 nav-caret transition-transform duration-200"></i>
+            </button>
+            <div class="nav-dropdown-panel absolute left-0 top-full pt-2.5 w-64 z-50">
+              <div class="bg-slate-950/95 backdrop-blur-2xl rounded-2xl border border-white/15 p-3.5 shadow-2xl space-y-1">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-amber-400 px-2.5 pb-1.5 border-b border-white/10">Roster Status</div>
+                <button onclick="navigateTo('schedule'); filterCalendarStatus('Open')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-emerald-500/15 text-xs font-semibold text-emerald-300 transition flex items-center justify-between">
+                  <span>Open Departures</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </button>
+                <button onclick="navigateTo('schedule'); filterCalendarStatus('Filling Fast')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-amber-500/15 text-xs font-semibold text-amber-300 transition flex items-center justify-between">
+                  <span>Filling Fast Teams</span>
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                </button>
+                <button onclick="navigateTo('schedule'); filterCalendarStatus('all')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-white/10 text-xs font-semibold text-slate-200 hover:text-white transition">
+                  Full 2026 / 2027 Calendar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- About & Guides with Hover Dropdown -->
+          <div class="relative nav-dropdown-wrapper">
+            <button data-nav="about" onclick="navigateTo('about')" class="nav-link nav-item-hover nav-hover-trigger px-3.5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold text-slate-100 flex items-center gap-1">
+              <span>About &amp; Guides</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-[#4ea8de] nav-caret transition-transform duration-200"></i>
+            </button>
+            <div class="nav-dropdown-panel absolute left-0 top-full pt-2.5 w-64 z-50">
+              <div class="bg-slate-950/95 backdrop-blur-2xl rounded-2xl border border-white/15 p-3.5 shadow-2xl space-y-1">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-[#4ea8de] px-2.5 pb-1.5 border-b border-white/10">Credentials &amp; Team</div>
+                <button onclick="navigateTo('about')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-white/10 text-xs font-semibold text-slate-200 hover:text-amber-300 transition">
+                  40+ Years Alpine Heritage
+                </button>
+                <button onclick="navigateTo('about')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-white/10 text-xs font-semibold text-slate-200 hover:text-amber-300 transition">
+                  IFMGA &amp; AMGA Lead Guides
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact with Hover Dropdown -->
+          <div class="relative nav-dropdown-wrapper">
+            <button data-nav="contact" onclick="navigateTo('contact')" class="nav-link nav-item-hover nav-hover-trigger px-3.5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold text-slate-100 flex items-center gap-1">
+              <span>Contact</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-amber-400 nav-caret transition-transform duration-200"></i>
+            </button>
+            <div class="nav-dropdown-panel absolute right-0 top-full pt-2.5 w-72 z-50">
+              <div class="bg-slate-950/95 backdrop-blur-2xl rounded-2xl border border-amber-500/30 p-4 shadow-2xl space-y-2 text-xs">
+                <div class="font-bold text-amber-400 uppercase tracking-wider text-[10px]">sayyani wahaj &bull; Aptech North Karachi</div>
+                <a href="tel:+923133118712" class="block text-slate-200 hover:text-amber-300 transition"><i class="fa-solid fa-phone text-[#4ea8de] mr-2"></i>0313 3118712</a>
+                <a href="mailto:sayyaniwahaj@gmail.com" class="block text-slate-200 hover:text-amber-300 transition"><i class="fa-solid fa-envelope text-amber-400 mr-2"></i>sayyaniwahaj@gmail.com</a>
+                <a href="https://wa.me/923133118712" target="_blank" rel="noopener noreferrer" class="block text-emerald-300 hover:text-emerald-200 font-semibold transition"><i class="fa-brands fa-whatsapp mr-2"></i>Message on WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Right Action Controls with Hover Glows -->
+        <div class="flex items-center gap-2.5">
+          <!-- Gear List Quick Button -->
+          <button onclick="openGearModal()" title="Gear List Portal"
+                  class="hidden xl:flex w-10 h-10 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-white/10 hover:border-amber-400/50 text-slate-200 hover:text-amber-300 items-center justify-center transition-all duration-200 hover:-translate-y-0.5">
+            <i class="fa-solid fa-person-hiking text-sm"></i>
+          </button>
+
+          <!-- Search Button -->
+          <button onclick="openSearchModal()" aria-label="Search Expeditions" title="Search Peaks & Routes"
+                  class="w-10 h-10 rounded-xl bg-white/5 hover:bg-amber-500/20 border border-white/10 hover:border-amber-400/50 text-slate-200 hover:text-amber-300 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5">
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </button>
+
+          <!-- Primary CTA Button -->
+          <button onclick="openBookingModal('General Expedition Inquiry')"
+                  class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-amber-500/30 hover:shadow-amber-400/50 transition-all duration-200 hover:-translate-y-0.5 active:scale-95 flex items-center gap-2">
+            <i class="fa-solid fa-compass"></i>
+            <span>Book Expedition</span>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button onclick="toggleMobileMenu()" aria-label="Toggle Menu"
+                  class="lg:hidden w-10 h-10 rounded-xl bg-white/10 hover:bg-amber-500/20 border border-white/15 text-white flex items-center justify-center transition">
+            <i id="mobileMenuIcon" class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-slate-950/95 backdrop-blur-2xl border-t border-white/15 px-4 pt-4 pb-6 space-y-2">
+      <div class="grid grid-cols-1 gap-1.5">
+        <button data-nav="home" onclick="navigateTo('home'); toggleMobileMenu()" class="nav-link-mobile text-left px-4 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-bold transition">
+          <i class="fa-solid fa-house w-5 text-amber-400"></i> Home
+        </button>
+        <button data-nav="expeditions" onclick="navigateTo('expeditions'); toggleMobileMenu()" class="nav-link-mobile text-left px-4 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-bold transition">
+          <i class="fa-solid fa-mountain-sun w-5 text-amber-400"></i> Expeditions Catalog
+        </button>
+        <button data-nav="school" onclick="navigateTo('school'); toggleMobileMenu()" class="nav-link-mobile text-left px-4 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-bold transition">
+          <i class="fa-solid fa-compass w-5 text-amber-400"></i> School &amp; Training
+        </button>
+        <button data-nav="schedule" onclick="navigateTo('schedule'); toggleMobileMenu()" class="nav-link-mobile text-left px-4 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-bold transition">
+          <i class="fa-solid fa-calendar-days w-5 text-amber-400"></i> Schedule 2026 / 2027
+        </button>
+        <button data-nav="about" onclick="navigateTo('about'); toggleMobileMenu()" class="nav-link-mobile text-left px-4 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-bold transition">
+          <i class="fa-solid fa-award w-5 text-amber-400"></i> About &amp; Guides
+        </button>
+        <button data-nav="contact" onclick="navigateTo('contact'); toggleMobileMenu()" class="nav-link-mobile text-left px-4 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-bold transition">
+          <i class="fa-solid fa-paper-plane w-5 text-amber-400"></i> Contact (Aptech North Karachi)
+        </button>
+      </div>
+
+      <!-- Mobile Social Icons Bar -->
+      <div class="pt-4 mt-3 border-t border-white/10 flex items-center justify-between px-2">
+        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Social Channels</span>
+        <div class="flex items-center gap-2">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-[#1877F2] flex items-center justify-center transition">
+            <i class="fa-brands fa-facebook-f text-sm"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-pink-600 flex items-center justify-center transition">
+            <i class="fa-brands fa-instagram text-sm"></i>
+          </a>
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" class="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-black flex items-center justify-center transition">
+            <i class="fa-brands fa-x-twitter text-sm"></i>
+          </a>
+          <a href="https://wa.me/923133118712" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-[#25D366] flex items-center justify-center transition">
+            <i class="fa-brands fa-whatsapp text-sm"></i>
+          </a>
+          <a href="https://threads.net" target="_blank" rel="noopener noreferrer" aria-label="Threads" class="w-9 h-9 rounded-full bg-white/10 text-white hover:bg-neutral-800 flex items-center justify-center transition">
+            <i class="fa-brands fa-threads text-sm"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN MULTI-PAGE CONTENT CONTAINER ==================== -->
+  <main class="flex-1 relative z-10">
+
+    <!-- ========================================================================== -->
+    <!-- PAGE 1: HOME PAGE (#home)                                                  -->
+    <!-- ========================================================================== -->
+    <div id="page-home" class="page-view">
+      <!-- Hero Section (Showcasing Crisp Snow-Covered Mountain Peaks Behind) -->
+      <section class="min-h-[82vh] flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full">
+          <div class="max-w-3xl">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-950/75 backdrop-blur-md border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-widest mb-6 shadow-xl">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+              <span>IFMGA &amp; AMGA Certified High-Altitude Guiding</span>
+            </div>
+
+            <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight leading-[1.04] mb-6 drop-shadow-[0_6px_24px_rgba(0,0,0,0.85)]">
+              Conquer the World's <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-500">Greatest Summits</span>
+            </h1>
+
+            <p class="text-base sm:text-xl text-slate-100 leading-relaxed mb-9 max-w-2xl font-normal drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+              From glacier training on Mount Rainier to the Seven Summits, Karakoram, and Mount Everest—experience world-class mountain leadership, conservative safety protocols, and unmatched summit support.
+            </p>
+
+            <!-- Primary & Secondary Hero CTAs -->
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button onclick="navigateTo('expeditions')" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-display uppercase tracking-wider text-sm sm:text-base font-extrabold px-8 py-4 rounded-xl shadow-2xl shadow-amber-500/30 transition-all duration-200 hover:-translate-y-0.5">
+                <span>Explore Expeditions</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+              <button onclick="navigateTo('schedule')" class="inline-flex items-center justify-center gap-3 bg-slate-950/70 hover:bg-slate-900/90 backdrop-blur-md text-white border border-white/25 hover:border-amber-400/50 font-display uppercase tracking-wider text-sm sm:text-base font-bold px-8 py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5">
+                <i class="fa-solid fa-calendar-days text-amber-400"></i>
+                <span>2026 / 2027 Schedule</span>
+              </button>
+            </div>
+
+            <!-- Telemetry Strip -->
+            <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-14 pt-8 border-t border-white/20 max-w-xl">
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-black text-white drop-shadow">40+ Yrs</div>
+                <div class="text-[11px] sm:text-xs text-amber-300 uppercase tracking-wider font-semibold mt-0.5">Alpine Heritage</div>
+              </div>
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-black text-amber-400 drop-shadow">30+</div>
+                <div class="text-[11px] sm:text-xs text-slate-200 uppercase tracking-wider font-semibold mt-0.5">Mountain Ranges</div>
+              </div>
+              <div>
+                <div class="font-display text-2xl sm:text-3xl font-black text-white drop-shadow">100%</div>
+                <div class="text-[11px] sm:text-xs text-amber-300 uppercase tracking-wider font-semibold mt-0.5">Leave No Trace</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Expedition Finder & Flagship Peaks -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <!-- Quick Expedition Finder Bar -->
+        <div class="alpine-glass-card rounded-2xl border border-white/15 p-6 sm:p-8 shadow-2xl mb-16">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1.5">Mountain Region</label>
+                <select id="homeRegionSelect" class="w-full bg-slate-900/90 border border-white/15 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="all">All Regions Worldwide</option>
+                  <option value="North America">North America (Alaska &amp; Cascades)</option>
+                  <option value="South America">South America (Andes)</option>
+                  <option value="Asia/Himalayas">Asia / Himalayas</option>
+                  <option value="Europe">Europe (The Alps)</option>
+                  <option value="Africa">Africa (East Africa)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1.5">Experience Level</label>
+                <select id="homeDifficultySelect" class="w-full bg-slate-900/90 border border-white/15 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="all">All Difficulty Levels</option>
+                  <option value="Beginner">Beginner (No Prior Experience)</option>
+                  <option value="Intermediate">Intermediate (Glacier &amp; Crampon)</option>
+                  <option value="Advanced">Advanced (High-Altitude Technical)</option>
+                  <option value="Expert">Expert (8,000m / Expedition)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1.5">Discipline</label>
+                <select id="homeActivitySelect" class="w-full bg-slate-900/90 border border-white/15 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="all">All Disciplines</option>
+                  <option value="Mountaineering">Mountaineering</option>
+                  <option value="Trekking">High-Altitude Trekking</option>
+                  <option value="Ski Mountaineering">Ski Mountaineering</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="launchFinderToExpeditions()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-7 py-3.5 rounded-xl shadow-lg transition whitespace-nowrap">
+              Find Expeditions <i class="fa-solid fa-arrow-right ml-1.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Flagship 6 Expeditions Grid -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Signature Guided Programs</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white uppercase mt-1 drop-shadow">
+              Flagship World Summits
+            </h2>
+          </div>
+          <button onclick="navigateTo('expeditions')" class="text-sm font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider flex items-center gap-2 transition">
+            <span>View Full 9-Peak Catalog</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <div id="homeFeaturedGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          <!-- Populated dynamically with top 6 flagship expeditions -->
+        </div>
+
+        <!-- The Alpine Ascents Difference (4 Pillars) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="alpine-glass-card p-6 rounded-2xl border border-white/15 hover:border-amber-400/40 transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-shield-halved text-lg"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white uppercase mb-1.5">Unmatched Safety</h3>
+            <p class="text-slate-300 text-xs leading-relaxed">Conservative decision-making, satellite weather forecasting, and continuous medical monitoring on every peak.</p>
+          </div>
+          <div class="alpine-glass-card p-6 rounded-2xl border border-white/15 hover:border-amber-400/40 transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-award text-lg"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white uppercase mb-1.5">IFMGA &amp; AMGA Guides</h3>
+            <p class="text-slate-300 text-xs leading-relaxed">Career alpine guides holding the highest international mountain guiding and wilderness medicine credentials.</p>
+          </div>
+          <div class="alpine-glass-card p-6 rounded-2xl border border-white/15 hover:border-amber-400/40 transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-users text-lg"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white uppercase mb-1.5">Low Climber Ratios</h3>
+            <p class="text-slate-300 text-xs leading-relaxed">Strict 1:1 on Everest, 2:1 on Rainier &amp; Mont Blanc, and 3:1 on Denali for personalized coaching.</p>
+          </div>
+          <div class="alpine-glass-card p-6 rounded-2xl border border-white/15 hover:border-amber-400/40 transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-leaf text-lg"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white uppercase mb-1.5">100% Leave No Trace</h3>
+            <p class="text-slate-300 text-xs leading-relaxed">Award-winning environmental stewardship and dedicated funding for high-altitude mountain communities.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- PAGE 2: EXPEDITIONS CATALOG PAGE (#expeditions)                            -->
+    <!-- ========================================================================== -->
+    <div id="page-expeditions" class="page-view hidden">
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div class="mb-10">
+          <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Seven Summits &bull; 8,000m Peaks &bull; Classic Ranges</span>
+          <h1 class="font-display text-4xl sm:text-5xl font-black text-white uppercase mt-1 drop-shadow">
+            Global Expeditions Catalog
+          </h1>
+          <p class="text-slate-200 max-w-2xl mt-3 text-sm sm:text-base">
+            Filter our full roster of guided mountaineering, high-altitude trekking, and ski mountaineering expeditions across six continents.
+          </p>
+        </div>
+
+        <!-- Interactive Filter Bar -->
+        <div class="alpine-glass-card rounded-2xl border border-white/15 p-5 sm:p-6 shadow-2xl mb-10">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1">
+              <div>
+                <label for="filterRegion" class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1.5">1. Mountain Region</label>
+                <select id="filterRegion" onchange="applyFilters()" class="w-full bg-slate-900/90 border border-white/15 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="all">All Regions Worldwide</option>
+                  <option value="North America">North America</option>
+                  <option value="South America">South America</option>
+                  <option value="Asia/Himalayas">Asia / Himalayas</option>
+                  <option value="Europe">Europe</option>
+                  <option value="Africa">Africa</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filterDifficulty" class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1.5">2. Experience Level</label>
+                <select id="filterDifficulty" onchange="applyFilters()" class="w-full bg-slate-900/90 border border-white/15 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="all">All Difficulty Levels</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                  <option value="Expert">Expert</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filterActivity" class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1.5">3. Discipline</label>
+                <select id="filterActivity" onchange="applyFilters()" class="w-full bg-slate-900/90 border border-white/15 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="all">All Disciplines</option>
+                  <option value="Mountaineering">Mountaineering</option>
+                  <option value="Trekking">High-Altitude Trekking</option>
+                  <option value="Ski Mountaineering">Ski Mountaineering</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between lg:justify-end gap-4">
+              <span id="resultsCount" class="text-sm font-semibold text-slate-200">Showing 9 Expeditions</span>
+              <button onclick="resetFilters()" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold uppercase tracking-wider transition">
+                Reset Filters
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expeditions Grid -->
+        <div id="expeditionsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 alpine-glass-card rounded-2xl border border-white/15">
+          <i class="fa-solid fa-mountain-sun text-4xl text-amber-400 mb-3"></i>
+          <h3 class="font-display text-2xl font-bold text-white uppercase">No Matching Expeditions</h3>
+          <p class="text-slate-300 text-sm mt-1 mb-5">Try adjusting your region, difficulty, or discipline filters.</p>
+          <button onclick="resetFilters()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-6 py-3 rounded-xl transition">
+            Show All 9 Expeditions
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- PAGE 3: MOUNTAINEERING SCHOOL & TRAINING PAGE (#school)                    -->
+    <!-- ========================================================================== -->
+    <div id="page-school" class="page-view hidden">
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div class="mb-12">
+          <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Glacier Travel &bull; Crevasse Rescue &bull; Expedition Prep</span>
+          <h1 class="font-display text-4xl sm:text-5xl font-black text-white uppercase mt-1 drop-shadow">
+            Alpine Mountaineering School
+          </h1>
+          <p class="text-slate-200 max-w-2xl mt-3 text-sm sm:text-base">
+            Master glacier travel, crevasse rescue, steep ice climbing, and winter expedition camping with AMGA-certified instructors before tackling the world's highest peaks.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Course 1 -->
+          <div class="alpine-glass-card rounded-2xl border border-white/15 overflow-hidden flex flex-col justify-between shadow-2xl">
+            <div>
+              <div class="relative h-56">
+                <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=1000&q=80"
+                     onerror="this.onerror=null;this.src='https://placehold.co/800x500/060B16/F8FAFC?text=6-Day+Glacier+Course';"
+                     alt="Mount Baker Glacier Course" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold uppercase">Beginner Friendly</span>
+                <span class="absolute bottom-3 left-4 text-xs font-bold text-amber-400 uppercase tracking-wider">6 Days &bull; Glacier &amp; Summit</span>
+              </div>
+              <div class="p-6">
+                <h3 class="font-display text-2xl font-bold text-white uppercase mb-2">6-Day Glacier Mountaineering Course</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                  Learn crampon footwork, ice axe self-arrest, Z-pulley crevasse rescue systems, glacier navigation, and rope-team leadership culminating in a glaciated summit ascent.
+                </p>
+                <ul class="space-y-1.5 text-xs text-slate-300 mb-6">
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>4:1 Student-to-Guide Ratio</li>
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>Includes Group Climbing Hardware &amp; Tents</li>
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>Ideal Prerequisite for Rainier, Kilimanjaro &amp; Mont Blanc</li>
+                </ul>
+              </div>
+            </div>
+            <div class="px-6 pb-6 flex items-center justify-between border-t border-white/10 pt-4">
+              <div>
+                <span class="text-[11px] uppercase text-slate-400 block font-bold">Course Tuition</span>
+                <span class="font-display text-2xl font-extrabold text-white">$1,850</span>
+              </div>
+              <button onclick="openBookingModal('6-Day Glacier Mountaineering Course')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-5 py-3 rounded-xl transition">
+                Enroll Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Course 2 -->
+          <div class="alpine-glass-card rounded-2xl border border-white/15 overflow-hidden flex flex-col justify-between shadow-2xl">
+            <div>
+              <div class="relative h-56">
+                <img src="https://images.unsplash.com/photo-1516592673884-4a382d1124c2?auto=format&fit=crop&w=1000&q=80"
+                     onerror="this.onerror=null;this.src='https://placehold.co/800x500/060B16/F8FAFC?text=Denali+Prep+Course';"
+                     alt="Denali Winter Prep Course" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-amber-600 text-white text-xs font-bold uppercase">Intermediate / Advanced</span>
+                <span class="absolute bottom-3 left-4 text-xs font-bold text-amber-400 uppercase tracking-wider">7 Days &bull; Winter Expedition</span>
+              </div>
+              <div class="p-6">
+                <h3 class="font-display text-2xl font-bold text-white uppercase mb-2">Denali &amp; 8,000m Expedition Prep Course</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                  Designed specifically for climbers preparing for Denali, Aconcagua, or Himalayan peaks. Covers sled hauling, fixed-line ascending, snow-wall fortification, and cold-weather physiology.
+                </p>
+                <ul class="space-y-1.5 text-xs text-slate-300 mb-6">
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>3:1 Student-to-Guide Ratio</li>
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>Full Winter Expedition Cooking &amp; Stove Systems</li>
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>Satisfies Denali &amp; Himalayan Prerequisites</li>
+                </ul>
+              </div>
+            </div>
+            <div class="px-6 pb-6 flex items-center justify-between border-t border-white/10 pt-4">
+              <div>
+                <span class="text-[11px] uppercase text-slate-400 block font-bold">Course Tuition</span>
+                <span class="font-display text-2xl font-extrabold text-white">$2,495</span>
+              </div>
+              <button onclick="openBookingModal('Denali & 8,000m Expedition Prep Course')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-5 py-3 rounded-xl transition">
+                Enroll Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Course 3 -->
+          <div class="alpine-glass-card rounded-2xl border border-white/15 overflow-hidden flex flex-col justify-between shadow-2xl">
+            <div>
+              <div class="relative h-56">
+                <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=1000&q=80"
+                     onerror="this.onerror=null;this.src='https://placehold.co/800x500/060B16/F8FAFC?text=Alpine+Ice+Climbing';"
+                     alt="Alpine Ice Climbing" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-sky-600 text-white text-xs font-bold uppercase">Technical Skills</span>
+                <span class="absolute bottom-3 left-4 text-xs font-bold text-amber-400 uppercase tracking-wider">4 Days &bull; Steep Ice</span>
+              </div>
+              <div class="p-6">
+                <h3 class="font-display text-2xl font-bold text-white uppercase mb-2">Steep Alpine Ice &amp; Mixed Climbing</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                  Master vertical water-ice and alpine north-face movement. Topics include dual technical ice-tool swing mechanics, front-pointing efficiency, V-thread anchors, and ice-screw placement.
+                </p>
+                <ul class="space-y-1.5 text-xs text-slate-300 mb-6">
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>2:1 Climber-to-Guide Ratio</li>
+                  <li><i class="fa-solid fa-check text-amber-400 mr-2"></i>Essential Preparation for Ama Dablam &amp; Alpamayo</li>
+                </ul>
+              </div>
+            </div>
+            <div class="px-6 pb-6 flex items-center justify-between border-t border-white/10 pt-4">
+              <div>
+                <span class="text-[11px] uppercase text-slate-400 block font-bold">Course Tuition</span>
+                <span class="font-display text-2xl font-extrabold text-white">$1,690</span>
+              </div>
+              <button onclick="openBookingModal('Steep Alpine Ice & Mixed Climbing Course')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-5 py-3 rounded-xl transition">
+                Enroll Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Course 4: Gear & Conditioning Hub -->
+          <div class="bg-gradient-to-br from-slate-950/90 to-amber-950/50 backdrop-blur-xl rounded-2xl border border-amber-400/35 p-7 sm:p-8 flex flex-col justify-between shadow-2xl">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">Climber Readiness</span>
+              <h3 class="font-display text-2xl sm:text-3xl font-bold text-white uppercase mt-4 mb-3">
+                16-Week Altitude Conditioning &amp; Gear Outfitting
+              </h3>
+              <p class="text-slate-200 text-sm leading-relaxed mb-6">
+                Every registered climber receives a customized periodized training blueprint tailored to their target peak's vertical gain, pack weight, and altitude profile—plus direct gear outfitting support.
+              </p>
+              <div class="grid grid-cols-2 gap-3 text-xs text-slate-200 mb-6">
+                <div class="bg-white/5 p-3.5 rounded-xl border border-white/10">
+                  <div class="font-bold text-amber-400 uppercase mb-1">Zone 2 Aerobic Base</div>
+                  <p class="text-slate-300">Weighted stair &amp; uphill pack progression</p>
+                </div>
+                <div class="bg-white/5 p-3.5 rounded-xl border border-white/10">
+                  <div class="font-bold text-amber-400 uppercase mb-1">Pro Gear Rentals</div>
+                  <p class="text-slate-300">Double boots, crampons &amp; 800-fill down suits</p>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <button onclick="openGearModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-5 py-3 rounded-xl transition">
+                Open Gear Checklist
+              </button>
+              <button onclick="openBookingModal('1-on-1 Training & Gear Consultation')" class="bg-white/10 hover:bg-white/20 text-white font-display uppercase tracking-wider text-xs font-bold px-5 py-3 rounded-xl transition">
+                Book Guide Consultation
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- PAGE 4: 2026 / 2027 EXPEDITION SCHEDULE PAGE (#schedule)                   -->
+    <!-- ========================================================================== -->
+    <div id="page-schedule" class="page-view hidden">
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Live Roster Availability</span>
+            <h1 class="font-display text-4xl sm:text-5xl font-black text-white uppercase mt-1 drop-shadow">
+              2026 / 2027 Departure Calendar
+            </h1>
+            <p class="text-slate-200 mt-2 text-sm sm:text-base max-w-2xl">
+              Review upcoming expedition dates, assigned IFMGA/AMGA lead guides, and current team roster availability.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <button onclick="filterCalendarStatus('all')" class="px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-amber-500 text-slate-950 transition">All Dates</button>
+            <button onclick="filterCalendarStatus('Open')" class="px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-slate-950/80 border border-white/15 text-emerald-300 hover:bg-white/10 transition">Open</button>
+            <button onclick="filterCalendarStatus('Filling Fast')" class="px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-slate-950/80 border border-white/15 text-amber-300 hover:bg-white/10 transition">Filling Fast</button>
+            <button onclick="filterCalendarStatus('Waitlist')" class="px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-slate-950/80 border border-white/15 text-rose-300 hover:bg-white/10 transition">Waitlist</button>
+          </div>
+        </div>
+
+        <div class="alpine-glass-card rounded-2xl border border-white/15 overflow-hidden shadow-2xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-white/10 bg-slate-950/90 text-xs uppercase tracking-wider text-amber-400">
+                  <th class="py-4 px-6 font-bold">Expedition / Route</th>
+                  <th class="py-4 px-6 font-bold">Departure Dates</th>
+                  <th class="py-4 px-6 font-bold">Lead Guide</th>
+                  <th class="py-4 px-6 font-bold">Tuition</th>
+                  <th class="py-4 px-6 font-bold">Status</th>
+                  <th class="py-4 px-6 font-bold text-right">Registration</th>
+                </tr>
+              </thead>
+              <tbody id="calendarTableBody" class="divide-y divide-white/10 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- PAGE 5: ABOUT & GUIDES PAGE (#about) — NO REVIEWS, NO FAQ                  -->
+    <!-- ========================================================================== -->
+    <div id="page-about" class="page-view hidden">
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <!-- Heritage Banner -->
+        <div class="alpine-glass-card rounded-3xl border border-white/15 p-8 sm:p-12 mb-16 shadow-2xl">
+          <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Our Story &amp; Ethos</span>
+          <h1 class="font-display text-4xl sm:text-5xl font-black text-white uppercase mt-2 mb-5">
+            Four Decades of Alpine Leadership
+          </h1>
+          <p class="text-slate-200 text-base sm:text-lg leading-relaxed max-w-4xl mb-8">
+            <strong class="text-white">Alpine Ascents International</strong> has grown from a dedicated collective of high-altitude alpinists into one of the world’s premier mountain guiding organizations. We are an accredited member of the American Mountain Guides Association (AMGA) and an award-winning partner of Leave No Trace.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/15">
+            <div>
+              <div class="font-display text-3xl font-extrabold text-amber-400">40+ Yrs</div>
+              <div class="text-xs text-slate-300 uppercase tracking-wider mt-1">Global Expedition Leadership</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl font-extrabold text-white">700+</div>
+              <div class="text-xs text-slate-300 uppercase tracking-wider mt-1">Everest &amp; 8,000m Summits</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl font-extrabold text-emerald-400">$1.2M+</div>
+              <div class="text-xs text-slate-300 uppercase tracking-wider mt-1">Donated to High-Altitude Mountain Staff</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Senior Lead Guides Grid -->
+        <div>
+          <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Leadership Team</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white uppercase mt-1 mb-8 drop-shadow">
+            Senior IFMGA &amp; AMGA Lead Guides
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="alpine-glass-card rounded-2xl border border-white/15 p-6 shadow-xl hover:border-amber-400/40 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-700 flex items-center justify-center text-slate-950 font-display text-2xl font-black">
+                  LR
+                </div>
+                <div>
+                  <h3 class="font-display text-xl font-bold text-white uppercase">Lhakpa Rita Sherpa</h3>
+                  <div class="text-xs text-amber-400 font-semibold">Sirdar &amp; 17x Everest Summiter</div>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Born in Thame, Nepal, Lhakpa Rita has led our Himalayan Sherpa climbing team for over 25 years and is the first Sherpa to complete the Seven Summits.
+              </p>
+            </div>
+
+            <div class="alpine-glass-card rounded-2xl border border-white/15 p-6 shadow-xl hover:border-amber-400/40 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-700 flex items-center justify-center text-white font-display text-2xl font-black">
+                  GM
+                </div>
+                <div>
+                  <h3 class="font-display text-xl font-bold text-white uppercase">Garrett Madison</h3>
+                  <div class="text-xs text-amber-400 font-semibold">IFMGA Guide &amp; Expedition Leader</div>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Veteran of 14 Everest summits, K2, Lhotse, and over 80 Mount Rainier ascents. Specializes in high-altitude logistics and conservative weather windows.
+              </p>
+            </div>
+
+            <div class="alpine-glass-card rounded-2xl border border-white/15 p-6 shadow-xl hover:border-amber-400/40 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-700 flex items-center justify-center text-white font-display text-2xl font-black">
+                  SW
+                </div>
+                <div>
+                  <h3 class="font-display text-xl font-bold text-white uppercase">Seth Waterfall</h3>
+                  <div class="text-xs text-amber-400 font-semibold">AMGA Certified Alpine &amp; Ski Guide</div>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm leading-relaxed">
+                Leads expeditions across Denali, Aconcagua, Kilimanjaro, and the North Cascades with a focus on technical mentoring and backcountry safety.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- PAGE 6: CONTACT & CUSTOM EXPEDITIONS PAGE (#contact)                       -->
+    <!-- ========================================================================== -->
+    <div id="page-contact" class="page-view hidden">
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div class="mb-12">
+          <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Direct Expedition Desk</span>
+          <h1 class="font-display text-4xl sm:text-5xl font-black text-white uppercase mt-1 drop-shadow">
+            Contact &amp; Custom Expeditions
+          </h1>
+          <p class="text-slate-200 max-w-2xl mt-3 text-sm sm:text-base">
+            Have questions about prerequisites, gear rentals, or organizing a private expedition? Reach out directly via phone, WhatsApp, or email.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Left: Updated Contact Details (sayyani wahaj, Aptech North Karachi, 0313 3118712) -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="alpine-glass-card rounded-2xl border border-white/15 p-6 sm:p-8 shadow-2xl">
+              <h3 class="font-display text-xl font-bold text-white uppercase mb-5">Expedition Coordinator</h3>
+              <ul class="space-y-4 text-sm text-slate-200">
+                <li class="flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-user-tie"></i>
+                  </div>
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-slate-400 block font-bold">Lead Contact</span>
+                    <span class="font-bold text-white text-base">sayyani wahaj</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-slate-400 block font-bold">Office Address</span>
+                    <span class="font-semibold text-white">Aptech North Karachi</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-phone"></i>
+                  </div>
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-slate-400 block font-bold">Cell / Direct Line</span>
+                    <a href="tel:+923133118712" class="hover:text-amber-400 font-bold text-white transition">0313 3118712</a>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-envelope"></i>
+                  </div>
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-slate-400 block font-bold">Official Email</span>
+                    <a href="mailto:sayyaniwahaj@gmail.com" class="hover:text-amber-400 font-semibold text-white transition">sayyaniwahaj@gmail.com</a>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-[#25D366] flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                  </div>
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-slate-400 block font-bold">WhatsApp Desk</span>
+                    <a href="https://wa.me/923133118712" target="_blank" rel="noopener noreferrer" class="hover:text-[#25D366] font-bold text-white transition">Chat on WhatsApp (0313 3118712)</a>
+                  </div>
+                </li>
+              </ul>
+
+              <!-- Social Links Grid -->
+              <div class="mt-7 pt-6 border-t border-white/10">
+                <div class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Official Social Channels</div>
+                <div class="flex flex-wrap gap-2.5">
+                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-[#1877F2] border border-white/10 text-xs font-semibold text-white flex items-center gap-2 transition">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                  </a>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-pink-600 border border-white/10 text-xs font-semibold text-white flex items-center gap-2 transition">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                  </a>
+                  <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-black border border-white/10 text-xs font-semibold text-white flex items-center gap-2 transition">
+                    <i class="fa-brands fa-x-twitter"></i> Twitter / X
+                  </a>
+                  <a href="https://wa.me/923133118712" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-[#25D366] border border-white/10 text-xs font-semibold text-white flex items-center gap-2 transition">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                  </a>
+                  <a href="https://threads.net" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-neutral-800 border border-white/10 text-xs font-semibold text-white flex items-center gap-2 transition">
+                    <i class="fa-brands fa-threads"></i> Threads
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Direct Inquiry Form -->
+          <div class="lg:col-span-7">
+            <div class="alpine-glass-card rounded-2xl border border-white/15 p-6 sm:p-8 shadow-2xl">
+              <h3 class="font-display text-2xl font-bold text-white uppercase mb-2">Send an Expedition Inquiry</h3>
+              <p class="text-slate-300 text-xs mb-6">Direct your expedition questions to <strong class="text-amber-400">sayyani wahaj</strong> at Aptech North Karachi.</p>
+              <form onsubmit="handleContactPageSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Full Name</label>
+                    <input type="text" required placeholder="Your Name" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Email Address</label>
+                    <input type="email" required placeholder="climber@example.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Inquiry Type</label>
+                    <select class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+                      <option>Scheduled Group Expedition</option>
+                      <option>Custom Private Climb</option>
+                      <option>Mountaineering School Course</option>
+                      <option>Gear Rental &amp; Training Advice</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Target Mountain / Region</label>
+                    <input type="text" placeholder="e.g., Everest, Denali, Rainier..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Message &amp; Climbing Background</label>
+                  <textarea rows="4" required placeholder="Tell us about your climbing goals, preferred dates, and past altitude experience..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400"></textarea>
+                </div>
+                <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-sm font-extrabold px-8 py-3.5 rounded-xl shadow-lg transition">
+                  Dispatch Inquiry <i class="fa-solid fa-paper-plane ml-2"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ==================== GLOBAL FOOTER (UPDATED CONTACT DETAILS, NO FAQ, NO REVIEWS) ==================== -->
+  <footer class="relative z-10 bg-slate-950/90 backdrop-blur-2xl text-slate-300 border-t border-white/15 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-white/10">
+        <!-- Brand & Socials -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center">
+              <i class="fa-solid fa-mountain text-slate-950"></i>
+            </div>
+            <span class="font-display text-lg font-extrabold text-white uppercase tracking-wider">Alpine Ascents</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed mb-5">
+            World-class guided mountaineering, global trekking, and alpine education. AMGA Accredited &amp; Leave No Trace Partner.
+          </p>
+          <!-- Footer Social Icons: Facebook, Instagram, Twitter/X, WhatsApp, Threads -->
+          <div class="flex items-center gap-2.5">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-[#1877F2] text-slate-200 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-facebook-f text-xs"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-pink-600 text-slate-200 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-instagram text-xs"></i>
+            </a>
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-black text-slate-200 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-x-twitter text-xs"></i>
+            </a>
+            <a href="https://wa.me/923133118712" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-[#25D366] text-slate-200 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-whatsapp text-xs"></i>
+            </a>
+            <a href="https://threads.net" target="_blank" rel="noopener noreferrer" aria-label="Threads" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-neutral-800 text-slate-200 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-threads text-xs"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navigation Pages -->
+        <div>
+          <h4 class="font-display text-xs font-bold text-white uppercase tracking-widest mb-4">Navigation</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><button onclick="navigateTo('home')" class="hover:text-amber-400 transition">Home</button></li>
+            <li><button onclick="navigateTo('expeditions')" class="hover:text-amber-400 transition">All Expeditions</button></li>
+            <li><button onclick="navigateTo('school')" class="hover:text-amber-400 transition">Mountaineering School</button></li>
+            <li><button onclick="navigateTo('schedule')" class="hover:text-amber-400 transition">2026 / 2027 Schedule</button></li>
+            <li><button onclick="navigateTo('about')" class="hover:text-amber-400 transition">About &amp; IFMGA Guides</button></li>
+            <li><button onclick="navigateTo('contact')" class="hover:text-amber-400 transition">Contact &amp; Custom Climbs</button></li>
+          </ul>
+        </div>
+
+        <!-- Flagship Peaks -->
+        <div>
+          <h4 class="font-display text-xs font-bold text-white uppercase tracking-widest mb-4">Iconic Summits</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><button onclick="openExpeditionModal('everest')" class="hover:text-amber-400 transition">Mount Everest (29,032 ft)</button></li>
+            <li><button onclick="openExpeditionModal('denali')" class="hover:text-amber-400 transition">Denali West Buttress (20,310 ft)</button></li>
+            <li><button onclick="openExpeditionModal('rainier')" class="hover:text-amber-400 transition">Mount Rainier 3-Day Muir</button></li>
+            <li><button onclick="openExpeditionModal('kilimanjaro')" class="hover:text-amber-400 transition">Kilimanjaro Lemosho Route</button></li>
+            <li><button onclick="openExpeditionModal('aconcagua')" class="hover:text-amber-400 transition">Aconcagua Polish Traverse</button></li>
+          </ul>
+        </div>
+
+        <!-- Contact Office (sayyani wahaj, Aptech North Karachi, 0313 3118712) -->
+        <div>
+          <h4 class="font-display text-xs font-bold text-white uppercase tracking-widest mb-4">Contact Desk</h4>
+          <ul class="space-y-2.5 text-xs text-slate-300">
+            <li><i class="fa-solid fa-user text-amber-400 mr-2"></i>sayyani wahaj</li>
+            <li><i class="fa-solid fa-location-dot text-amber-400 mr-2"></i>Aptech North Karachi</li>
+            <li><i class="fa-solid fa-phone text-amber-400 mr-2"></i><a href="tel:+923133118712" class="hover:text-amber-400">0313 3118712</a></li>
+            <li><i class="fa-solid fa-envelope text-amber-400 mr-2"></i><a href="mailto:sayyaniwahaj@gmail.com" class="hover:text-amber-400">sayyaniwahaj@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 Alpine Ascents International &bull; Managed by sayyani wahaj.</p>
+        <div class="flex items-center gap-4">
+          <span class="text-amber-400/80 font-semibold">AMGA Accredited</span>
+          <span>&bull;</span>
+          <span class="text-emerald-400/80 font-semibold">Leave No Trace Partner</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAL 1: EXPEDITION ITINERARY & RESERVATION ==================== -->
+  <div id="itineraryModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 overflow-y-auto">
+    <div class="bg-slate-900 text-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/15 relative">
+      <button onclick="closeModal('itineraryModal')" aria-label="Close Itinerary" class="sticky top-4 float-right mr-4 mt-4 z-10 w-10 h-10 rounded-full bg-slate-950 text-white hover:bg-amber-500 hover:text-slate-950 border border-white/15 flex items-center justify-center shadow-lg transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="itineraryModalContent"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: QUICK BOOK / RESERVATION MODAL ==================== -->
+  <div id="bookingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 backdrop-blur-md p-4">
+    <div class="bg-slate-900 text-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-white/15 relative">
+      <button onclick="closeModal('bookingModal')" aria-label="Close Form" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Expedition Registration</span>
+      <h3 class="font-display text-2xl sm:text-3xl font-bold text-white uppercase mt-1 mb-2">
+        Reserve Spot / Request Dossier
+      </h3>
+      <p class="text-slate-300 text-xs mb-6">
+        Connect directly with <strong class="text-amber-400">sayyani wahaj</strong> (0313 3118712 &bull; Aptech North Karachi) regarding prerequisites, gear, and roster availability.
+      </p>
+      <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">Selected Expedition / Course</label>
+          <input type="text" id="bookingExpeditionInput" required class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-sm font-semibold text-white" />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">Full Name</label>
+            <input type="text" required placeholder="Your Full Name" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-sm text-white focus:ring-2 focus:ring-amber-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">Email Address</label>
+            <input type="email" required placeholder="climber@example.com" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-sm text-white focus:ring-2 focus:ring-amber-400 focus:outline-none" />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">Phone / WhatsApp</label>
+            <input type="tel" placeholder="0313 3118712" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-sm text-white focus:ring-2 focus:ring-amber-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">Prior Altitude Experience</label>
+            <select class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-sm text-white focus:ring-2 focus:ring-amber-400 focus:outline-none">
+              <option>First High-Altitude Climb</option>
+              <option>Glacier / 14,000ft Peaks</option>
+              <option>6,000m+ Technical Peaks</option>
+              <option>7,000m–8,000m Expeditions</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-sm font-extrabold py-3.5 rounded-xl shadow-lg transition">
+          Submit Expedition Request
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: LIVE SEARCH MODAL ==================== -->
+  <div id="searchModal" class="fixed inset-0 z-50 hidden items-start justify-center bg-slate-950/85 backdrop-blur-md pt-20 p-4">
+    <div class="bg-slate-900 text-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-white/15">
+      <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+        <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
+        <input
+          type="text"
+          id="liveSearchInput"
+          oninput="runLiveSearch()"
+          placeholder="Search peaks, routes, countries (e.g., Everest, Rainier, Alaska, Alps)..."
+          class="w-full bg-transparent text-base text-white placeholder-slate-400 focus:outline-none"
+        />
+        <button onclick="closeModal('searchModal')" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div id="liveSearchResults" class="mt-4 max-h-80 overflow-y-auto divide-y divide-white/10"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 4: GEAR LIST PORTAL MODAL ==================== -->
+  <div id="gearModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 backdrop-blur-md p-4">
+    <div class="bg-slate-900 text-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-white/15 relative max-h-[88vh] overflow-y-auto">
+      <button onclick="closeModal('gearModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <span class="text-amber-400 font-bold uppercase tracking-widest text-xs">Official Outfitting Portal</span>
+      <h3 class="font-display text-2xl sm:text-3xl font-bold text-white uppercase mt-1 mb-2">
+        Mandatory Expedition Gear Checklist
+      </h3>
+      <p class="text-slate-300 text-xs mb-5">
+        Every climber undergoes a thorough gear inspection with lead guides prior to departure. Contact <strong class="text-amber-400">sayyani wahaj (0313 3118712)</strong> for outfitting guidance.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-white/10">
+          <h4 class="font-bold uppercase tracking-wider mb-2 text-amber-400">Technical Hardware</h4>
+          <ul class="space-y-1.5 text-slate-300">
+            <li>&bull; UIAA Certified Climbing Helmet</li>
+            <li>&bull; 12-Point Steel Crampons (fitted)</li>
+            <li>&bull; Classic Mountaineering Ice Axe</li>
+            <li>&bull; Alpine Harness + Locking Carabiners</li>
+            <li>&bull; Ascender (Jumar) &amp; Belay Device</li>
+          </ul>
+        </div>
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-white/10">
+          <h4 class="font-bold uppercase tracking-wider mb-2 text-amber-400">Footwear &amp; Layering</h4>
+          <ul class="space-y-1.5 text-slate-300">
+            <li>&bull; Double Insulated Mountaineering Boots</li>
+            <li>&bull; 3-Layer Gore-Tex Hardshell Jacket &amp; Bibs</li>
+            <li>&bull; 800-Fill Expedition Down Parka</li>
+            <li>&bull; Merino Base Layers &amp; Softshell Pants</li>
+            <li>&bull; Glacier Glasses (Cat 4) &amp; Ski Goggles</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button onclick="closeModal('gearModal'); openBookingModal('Gear Consultation & Rental Inquiry')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold px-5 py-3 rounded-xl transition">
+          Schedule Gear Consultation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 hidden items-center gap-3 bg-slate-900 text-white border border-amber-500/40 px-5 py-4 rounded-xl shadow-2xl max-w-md">
+    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <div class="text-xs sm:text-sm" id="toastMessage">Request submitted successfully.</div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // 1. HIGH-DEFINITION SNOWY ALPINE MOUNTAIN VIDEO SCENES + GUARANTEED SNOWY MOUNTAIN CANVAS FALLBACK
+    const mountainVideoScenes = [
+      {
+        label: 'Snow Peaks',
+        url: 'https://videos.pexels.com/video-files/3015510/3015510-hd_1920_1080_24fps.mp4',
+        fallback: 'https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-snow-covered-mountains-32450-large.mp4',
+        palette: { skyTop: '#071326', skyMid: '#13315c', skyHorizon: '#8da9c4', peakBack: '#274c77', peakFront: '#0b1d36', snow: '#f8fafc', snowShadow: '#cbd5e1', alpenglow: '#f59e0b' }
+      },
+      {
+        label: 'Glacier Ridge',
+        url: 'https://videos.pexels.com/video-files/857195/857195-hd_1920_1080_25fps.mp4',
+        fallback: 'https://videos.pexels.com/video-files/3015510/3015510-hd_1920_1080_24fps.mp4',
+        palette: { skyTop: '#061021', skyMid: '#1b4965', skyHorizon: '#a9d6e5', peakBack: '#2a6f97', peakFront: '#0d253a', snow: '#ffffff', snowShadow: '#bae6fd', alpenglow: '#4ea8de' }
+      },
+      {
+        label: 'Summit Snow',
+        url: 'https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-snow-covered-mountains-32450-large.mp4',
+        fallback: 'https://videos.pexels.com/video-files/3015510/3015510-hd_1920_1080_24fps.mp4',
+        palette: { skyTop: '#090d1c', skyMid: '#242b4d', skyHorizon: '#c9ada7', peakBack: '#3a3d5c', peakFront: '#11162b', snow: '#fff8f1', snowShadow: '#cbd5e1', alpenglow: '#f97316' }
+      }
+    ];
+
+    let activeSceneIndex = 0;
+    const snowflakes = [];
+
+    function initSnowCanvas() {
+      const canvas = document.getElementById('snowMountainCanvas');
+      if (!canvas) return;
+      const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      for (let i = 0; i < 130; i++) {
+        snowflakes.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: 1.2 + Math.random() * 2.8,
+          vy: 0.7 + Math.random() * 1.6,
+          vx: -0.4 + Math.random() * 0.8,
+          alpha: 0.35 + Math.random() * 0.55
+        });
+      }
+
+      const drawMountainRange = (ctx, w, h, baseY, peakHeight, color, snowColor, snowShadowColor, seedShift) => {
+        const peaks = [
+          { px: 0.06, py: 0.55 },
+          { px: 0.22, py: 0.16 },
+          { px: 0.38, py: 0.48 },
+          { px: 0.55, py: 0.08 },
+          { px: 0.72, py: 0.42 },
+          { px: 0.88, py: 0.20 },
+          { px: 1.04, py: 0.52 }
+        ];
+
+        ctx.beginPath();
+        ctx.moveTo(-40, h);
+        peaks.forEach((pt, idx) => {
+          const x = (pt.px + Math.sin(seedShift + idx) * 0.025) * w;
+          const y = baseY - (1 - pt.py) * peakHeight;
+          ctx.lineTo(x, y);
+        });
+        ctx.lineTo(w + 40, h);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+
+        // Crisp snowy caps on upper ridges
+        peaks.forEach((pt, idx) => {
+          if (pt.py < 0.5) {
+            const tipX = (pt.px + Math.sin(seedShift + idx) * 0.025) * w;
+            const tipY = baseY - (1 - pt.py) * peakHeight;
+            const capSpread = w * 0.075;
+            const capBottom = tipY + peakHeight * 0.26;
+
+            ctx.beginPath();
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(tipX - capSpread, capBottom);
+            ctx.lineTo(tipX - capSpread * 0.25, capBottom - 8);
+            ctx.lineTo(tipX, capBottom + 4);
+            ctx.lineTo(tipX + capSpread * 0.3, capBottom - 6);
+            ctx.lineTo(tipX + capSpread, capBottom);
+            ctx.closePath();
+            ctx.fillStyle = snowColor;
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(tipX + capSpread * 0.3, capBottom - 6);
+            ctx.lineTo(tipX + capSpread, capBottom);
+            ctx.lineTo(tipX, capBottom + 4);
+            ctx.closePath();
+            ctx.fillStyle = snowShadowColor;
+            ctx.globalAlpha = 0.45;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+          }
+        });
+      };
+
+      let drift = 0;
+      function renderSnowyMountains() {
+        const w = canvas.width;
+        const h = canvas.height;
+        const ctx = canvas.getContext('2d');
+        const scene = mountainVideoScenes[activeSceneIndex] || mountainVideoScenes[0];
+        const p = scene.palette;
+
+        drift += 0.0018;
+
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+        skyGrad.addColorStop(0, p.skyTop);
+        skyGrad.addColorStop(0.55, p.skyMid);
+        skyGrad.addColorStop(1, p.skyHorizon);
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Subtle alpine alpenglow / sun glow
+        const glow = ctx.createRadialGradient(w * 0.65, h * 0.26, 15, w * 0.65, h * 0.26, w * 0.38);
+        glow.addColorStop(0, p.alpenglow + '44');
+        glow.addColorStop(1, 'transparent');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, w, h);
+
+        // Far & foreground snow-covered mountain ranges
+        drawMountainRange(ctx, w, h, h * 0.88, h * 0.56, p.peakBack, p.snow, p.snowShadow, drift);
+        drawMountainRange(ctx, w, h, h * 0.98, h * 0.44, p.peakFront, p.snow, p.snowShadow, drift * 1.4 + 2.1);
+
+        // Drifting mountain snow particles
+        snowflakes.forEach(flake => {
+          flake.x += flake.vx + Math.sin(drift * 6 + flake.y * 0.01) * 0.35;
+          flake.y += flake.vy;
+          if (flake.y > h) {
+            flake.y = -8;
+            flake.x = Math.random() * w;
+          }
+          if (flake.x > w) flake.x = 0;
+          if (flake.x < 0) flake.x = w;
+
+          ctx.beginPath();
+          ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${flake.alpha})`;
+          ctx.fill();
+        });
+
+        requestAnimationFrame(renderSnowyMountains);
+      }
+
+      renderSnowyMountains();
+    }
+
+    function switchMountainVideo(index) {
+      activeSceneIndex = index;
+      const video = document.getElementById('globalBgVideo');
+      const srcPrimary = document.getElementById('videoSourcePrimary');
+      const srcFallback = document.getElementById('videoSourceFallback');
+      const scene = mountainVideoScenes[index] || mountainVideoScenes[0];
+
+      srcPrimary.src = scene.url;
+      srcFallback.src = scene.fallback;
+      video.load();
+      video.play().catch(() => {});
+
+      document.querySelectorAll('.cam-btn').forEach((btn, idx) => {
+        if (idx === index) {
+          btn.className = 'cam-btn px-2.5 py-1 rounded-full bg-amber-500 text-slate-950 font-bold text-[10px] uppercase transition';
+        } else {
+          btn.className = 'cam-btn px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 text-slate-300 font-bold text-[10px] uppercase transition';
+        }
+      });
+    }
+
+    function toggleBgVideo() {
+      const video = document.getElementById('globalBgVideo');
+      const icon = document.getElementById('videoToggleIcon');
+      if (video.paused) {
+        video.play().catch(() => {});
+        icon.className = 'fa-solid fa-pause text-[11px]';
+      } else {
+        video.pause();
+        icon.className = 'fa-solid fa-play text-[11px]';
+      }
+    }
+
+    // 2. EXPEDITION DATA CATALOG (9 Global Expeditions)
+    const expeditionsData = [
+      {
+        id: 'everest',
+        title: 'Mount Everest Expedition',
+        subtitle: 'South Col Route • Nepal',
+        region: 'Asia/Himalayas',
+        difficulty: 'Expert',
+        activity: 'Mountaineering',
+        elevation: '29,032 ft / 8,849 m',
+        duration: '65 Days',
+        price: '$75,000',
+        nextDeparture: 'March 28, 2027',
+        ratio: '1:1 Personal Sherpa + IFMGA Lead',
+        image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80',
+        summary: 'Our flagship Himalayan expedition. Led by multi-time Everest summiters with an unmatched 1:1 Western/Sherpa support structure, personalized oxygen protocols, and private Base Camp amenities.',
+        itinerary: [
+          { days: 'Days 1–4', title: 'Kathmandu Briefing & Flight to Lukla', desc: 'Gear inspection in Kathmandu, flight to Lukla (9,383 ft), and trek to Phakding.' },
+          { days: 'Days 5–13', title: 'Khumbu Valley Acclimatization Trek', desc: 'Gradual ascent through Namche Bazaar, Tengboche Monastery, and Dingboche to Everest Base Camp (17,598 ft).' },
+          { days: 'Days 14–42', title: 'Khumbu Icefall & High-Camp Rotations', desc: 'Technical ladder training followed by rotations to Camp 1, Camp 2 (21,300 ft), and Camp 3 on the Lhotse Face.' },
+          { days: 'Days 43–60', title: 'South Col & Summit Push', desc: 'Ascend via the Geneva Spur to Camp 4 (26,000 ft) and the Hillary Step to the 29,032 ft summit.' },
+          { days: 'Days 61–65', title: 'Descent & Return', desc: 'Return trek down the Khumbu Valley and celebratory farewell dinner.' }
+        ]
+      },
+      {
+        id: 'denali',
+        title: 'Denali — West Buttress',
+        subtitle: 'Alaska Range • USA',
+        region: 'North America',
+        difficulty: 'Advanced',
+        activity: 'Mountaineering',
+        elevation: '20,310 ft / 6,190 m',
+        duration: '21 Days',
+        price: '$11,200',
+        nextDeparture: 'May 14, 2026',
+        ratio: '3:1 Climber-to-Guide Ratio',
+        image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=80',
+        summary: 'North America’s highest peak demands Arctic expedition skills. Hauling sleds up the Kahiltna Glacier and ascending the fixed lines of the Headwall offers true sub-zero expedition camaraderie.',
+        itinerary: [
+          { days: 'Days 1–3', title: 'Talkeetna Check-In & Kahiltna Ski-Plane', desc: 'Equipment check in Talkeetna and glacier flight onto the Kahiltna Glacier (7,200 ft).' },
+          { days: 'Days 4–9', title: 'Ski Hill & 14,200 ft Genet Basin Camp', desc: 'Double-carrying loads with expedition sleds up Windy Corner to main base camp.' },
+          { days: 'Days 10–14', title: 'West Buttress Ridge & High Camp', desc: 'Ascend the fixed lines of the Headwall to Washburn’s Thumb and 17,200 ft High Camp.' },
+          { days: 'Days 15–21', title: 'Denali Pass, Summit Push & Flight Out', desc: 'Traverse the Football Field to the 20,310 ft summit and return to Talkeetna.' }
+        ]
+      },
+      {
+        id: 'rainier',
+        title: 'Mount Rainier — 3-Day Muir Climb',
+        subtitle: 'Cascade Range • Washington',
+        region: 'North America',
+        difficulty: 'Beginner',
+        activity: 'Mountaineering',
+        elevation: '14,411 ft / 4,392 m',
+        duration: '3 Days',
+        price: '$1,795',
+        nextDeparture: 'June 12, 2026',
+        ratio: '2:1 Climber-to-Guide Ratio',
+        image: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1000&q=80',
+        summary: 'The premier glaciated peak in the contiguous United States. Ideal for fit beginners and seasoned alpinists alike, featuring a full day of snow-school instruction at Camp Muir.',
+        itinerary: [
+          { days: 'Day 1', title: 'Orientation & Ascent to Camp Muir', desc: 'Morning gear check followed by a 4,600 ft climb to Camp Muir (10,080 ft).' },
+          { days: 'Day 2', title: 'Glacier Travel & Self-Arrest School', desc: 'Hands-on training in crampon technique, ice axe self-arrest, and rope-team travel.' },
+          { days: 'Day 3', title: 'Alpine Start via Disappointment Cleaver', desc: '1:00 AM headlamp departure across the Cowlitz Glacier to Columbia Crest (14,411 ft).' }
+        ]
+      },
+      {
+        id: 'kilimanjaro',
+        title: 'Mount Kilimanjaro — Lemosho',
+        subtitle: 'Tanzania • East Africa',
+        region: 'Africa',
+        difficulty: 'Beginner',
+        activity: 'Trekking',
+        elevation: '19,341 ft / 5,895 m',
+        duration: '10 Days',
+        price: '$6,450',
+        nextDeparture: 'July 18, 2026',
+        ratio: '4:1 + Senior Tanzanian Mountain Crew',
+        image: 'https://images.unsplash.com/photo-1589553416260-f586c8f1514f?auto=format&fit=crop&w=1000&q=80',
+        summary: 'Our preferred 8-day mountain itinerary on the scenic Lemosho Route maximizes acclimatization across the Shira Plateau, Barranco Wall, and Southern Icefields for a 96%+ summit rate.',
+        itinerary: [
+          { days: 'Days 1–2', title: 'Arusha Arrival & Londorossi Gate', desc: 'Welcome briefing in Arusha before entering the montane rainforest on the western slopes.' },
+          { days: 'Days 3–5', title: 'Shira Plateau & Lava Tower Acclimatization', desc: 'Cross the volcanic Shira Caldera and hike high to Lava Tower (15,190 ft).' },
+          { days: 'Days 6–10', title: 'Barranco Wall, Barafu & Uhuru Peak Summit', desc: 'Midnight ascent past Stella Point to Uhuru Peak (19,341 ft) at sunrise.' }
+        ]
+      },
+      {
+        id: 'aconcagua',
+        title: 'Aconcagua — Polish Traverse',
+        subtitle: 'Mendoza Andes • Argentina',
+        region: 'South America',
+        difficulty: 'Intermediate',
+        activity: 'Mountaineering',
+        elevation: '22,837 ft / 6,961 m',
+        duration: '20 Days',
+        price: '$7,200',
+        nextDeparture: 'December 05, 2026',
+        ratio: '3:1 Climber-to-Guide Ratio',
+        image: 'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&w=1000&q=80',
+        summary: 'The highest peak in the Western and Southern Hemispheres. Ascending via the scenic Vacas Valley and descending the Normal Route provides an extraordinary 360-degree traverse.',
+        itinerary: [
+          { days: 'Days 1–7', title: 'Mendoza Permits & Plaza Argentina Base Camp', desc: 'Approach through the Vacas Valley with mule support to Base Camp (13,780 ft).' },
+          { days: 'Days 8–14', title: 'High Camps Beneath Polish Glacier', desc: 'Progressive load carries to Camp 1, Camp 2, and Camp Cholera (19,600 ft).' },
+          { days: 'Days 15–20', title: 'Canaleta Summit Push & Horcones Descent', desc: 'Climb the rocky traverse and Canaleta to the 22,837 ft summit.' }
+        ]
+      },
+      {
+        id: 'montblanc',
+        title: 'Mont Blanc & Gran Paradiso',
+        subtitle: 'Chamonix & Aosta Valley • France / Italy',
+        region: 'Europe',
+        difficulty: 'Intermediate',
+        activity: 'Ski Mountaineering',
+        elevation: '15,774 ft / 4,808 m',
+        duration: '9 Days',
+        price: '$5,850',
+        nextDeparture: 'August 09, 2026',
+        ratio: '2:1 IFMGA Certified Guide Ratio',
+        image: 'https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=1000&q=80',
+        summary: 'Experience classic European alpinism with IFMGA guides. Warm up on Italy’s Gran Paradiso (13,323 ft) before traversing the knife-edge Bosses Ridge to the summit of Western Europe.',
+        itinerary: [
+          { days: 'Days 1–3', title: 'Chamonix Arrival & Gran Paradiso Ascent', desc: 'Meet your IFMGA guide in Chamonix and summit Italy’s Gran Paradiso.' },
+          { days: 'Days 4–9', title: 'Goûter Refuge & Mont Blanc Summit', desc: 'Climb the Dôme du Goûter and Bosses Ridge to 15,774 ft before returning to Chamonix.' }
+        ]
+      },
+      {
+        id: 'amadablam',
+        title: 'Ama Dablam Expedition',
+        subtitle: 'Khumbu Valley • Nepal',
+        region: 'Asia/Himalayas',
+        difficulty: 'Advanced',
+        activity: 'Mountaineering',
+        elevation: '22,349 ft / 6,812 m',
+        duration: '28 Days',
+        price: '$14,800',
+        nextDeparture: 'October 18, 2026',
+        ratio: '2:1 Western/Sherpa Technical Ratio',
+        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=80',
+        summary: 'Widely considered the most photogenic technical peak in the Himalayas, offering exposed granite ridges, steep snow/ice flutes, and thrilling high camps.',
+        itinerary: [
+          { days: 'Days 1–10', title: 'Lukla to Pangboche & Base Camp', desc: 'Acclimatization trek through Namche Bazaar and Tengboche to Ama Dablam Base Camp (15,000 ft).' },
+          { days: 'Days 11–28', title: 'Yellow Tower, Mushroom Ridge & Summit', desc: 'Ascend fixed rock/ice lines through Camp 1 and Camp 2 to the 22,349 ft summit.' }
+        ]
+      },
+      {
+        id: 'chooyu',
+        title: 'Cho Oyu — 8,000m Expedition',
+        subtitle: 'Himalayas • Nepal / Tibet',
+        region: 'Asia/Himalayas',
+        difficulty: 'Expert',
+        activity: 'Mountaineering',
+        elevation: '26,864 ft / 8,188 m',
+        duration: '42 Days',
+        price: '$36,500',
+        nextDeparture: 'September 04, 2026',
+        ratio: '1:1 Sherpa Support + Lead Guide',
+        image: 'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&fit=crop&w=1000&q=80',
+        summary: 'The sixth highest mountain in the world and the premier stepping stone to Mount Everest, featuring moderate snow slopes and magnificent views of Everest and Lhotse.',
+        itinerary: [
+          { days: 'Days 1–14', title: 'Acclimatization & Advanced Base Camp', desc: 'Gradual ascent to 18,700 ft Advanced Base Camp with full dining and communication tents.' },
+          { days: 'Days 15–42', title: 'Camp 1, Camp 2 & 8,188m Summit Push', desc: 'Rotations across the Ice Cliff to Camp 2 (23,300 ft) and summit push to 26,864 ft.' }
+        ]
+      },
+      {
+        id: 'cotopaxi',
+        title: 'Ecuador Volcanoes: Cotopaxi & Chimborazo',
+        subtitle: 'Avenue of the Volcanoes • Ecuador',
+        region: 'South America',
+        difficulty: 'Beginner',
+        activity: 'Mountaineering',
+        elevation: '20,548 ft / 6,263 m',
+        duration: '12 Days',
+        price: '$4,850',
+        nextDeparture: 'November 10, 2026',
+        ratio: '2:1 Climber-to-Guide Ratio',
+        image: 'https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1000&q=80',
+        summary: 'Stand on the farthest point from Earth’s center on Chimborazo after acclimatizing on Cotopaxi and Cayambe—all while staying in historic Andean haciendas.',
+        itinerary: [
+          { days: 'Days 1–5', title: 'Quito & Cayambe Acclimatization', desc: 'Cultural tour of Quito and glacier training on Cayambe (18,996 ft).' },
+          { days: 'Days 6–12', title: 'Cotopaxi (19,347 ft) & Chimborazo (20,548 ft)', desc: 'Summit both iconic glaciated volcanoes with comfortable lodge stays in between.' }
+        ]
+      }
+    ];
+
+    // 3. UPCOMING CALENDAR SCHEDULE DATA
+    const calendarSchedule = [
+      { id: 'rainier', name: 'Mount Rainier — 3-Day Muir Climb', dates: 'Jun 12 – Jun 14, 2026', guide: 'Garrett Madison (IFMGA)', price: '$1,795', status: 'Filling Fast' },
+      { id: 'denali', name: 'Denali — West Buttress Expedition', dates: 'May 14 – Jun 03, 2026', guide: 'Lhakpa Rita Sherpa', price: '$11,200', status: 'Open' },
+      { id: 'kilimanjaro', name: 'Kilimanjaro — Lemosho Route', dates: 'Jul 18 – Jul 27, 2026', guide: 'Seth Waterfall (AMGA)', price: '$6,450', status: 'Open' },
+      { id: 'montblanc', name: 'Mont Blanc & Gran Paradiso', dates: 'Aug 09 – Aug 17, 2026', guide: 'Jean-Luc Moreau (IFMGA)', price: '$5,850', status: 'Filling Fast' },
+      { id: 'chooyu', name: 'Cho Oyu — 8,000m Expedition', dates: 'Sep 04 – Oct 15, 2026', guide: 'Garrett Madison & Sherpa Team', price: '$36,500', status: 'Open' },
+      { id: 'amadablam', name: 'Ama Dablam Technical Ascent', dates: 'Oct 18 – Nov 14, 2026', guide: 'Lhakpa Rita Sherpa', price: '$14,800', status: 'Filling Fast' },
+      { id: 'cotopaxi', name: 'Ecuador Volcanoes: Cotopaxi & Chimborazo', dates: 'Nov 10 – Nov 21, 2026', guide: 'Eric Murphy (AMGA)', price: '$4,850', status: 'Open' },
+      { id: 'aconcagua', name: 'Aconcagua — Polish Traverse', dates: 'Dec 05 – Dec 24, 2026', guide: 'Seth Waterfall (AMGA)', price: '$7,200', status: 'Open' },
+      { id: 'everest', name: 'Mount Everest — South Col', dates: 'Mar 28 – May 31, 2027', guide: 'Garrett Madison & Senior Sherpas', price: '$75,000', status: 'Waitlist' }
+    ];
+
+    // 4. MULTI-PAGE ROUTER
+    const validPages = ['home', 'expeditions', 'school', 'schedule', 'about', 'contact'];
+
+    function navigateTo(pageId, updateHash = true) {
+      if (!validPages.includes(pageId)) pageId = 'home';
+
+      validPages.forEach(id => {
+        const pageEl = document.getElementById(`page-${id}`);
+        if (pageEl) {
+          if (id === pageId) {
+            pageEl.classList.remove('hidden');
+          } else {
+            pageEl.classList.add('hidden');
+          }
+        }
+      });
+
+      document.querySelectorAll('.nav-link').forEach(btn => {
+        if (btn.dataset.nav === pageId) {
+          btn.classList.add('nav-item-active');
+        } else {
+          btn.classList.remove('nav-item-active');
+        }
+      });
+
+      document.querySelectorAll('.nav-link-mobile').forEach(btn => {
+        if (btn.dataset.nav === pageId) {
+          btn.classList.add('bg-amber-500/20', 'text-amber-300', 'border', 'border-amber-500/40');
+          btn.classList.remove('text-slate-200', 'hover:bg-white/5');
+        } else {
+          btn.classList.remove('bg-amber-500/20', 'text-amber-300', 'border', 'border-amber-500/40');
+          btn.classList.add('text-slate-200', 'hover:bg-white/5');
+        }
+      });
+
+      if (updateHash) {
+        history.replaceState(null, '', `#${pageId}`);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function quickFilterRegion(regionName) {
+      document.getElementById('filterRegion').value = regionName;
+      document.getElementById('filterDifficulty').value = 'all';
+      document.getElementById('filterActivity').value = 'all';
+      applyFilters();
+      navigateTo('expeditions');
+    }
+
+    // 5. CARD BUILDER HELPER
+    function createExpeditionCardHTML(exp) {
+      const badgeColor =
+        exp.difficulty === 'Beginner' ? 'bg-emerald-600 text-white' :
+        exp.difficulty === 'Intermediate' ? 'bg-sky-600 text-white' :
+        exp.difficulty === 'Advanced' ? 'bg-amber-600 text-white' :
+        'bg-rose-700 text-white';
+
+      return `
+        <article class="bg-slate-950/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/15 shadow-2xl hover:border-amber-400/60 transition-all duration-300 flex flex-col group">
+          <div class="relative h-56 overflow-hidden bg-slate-950">
+            <img
+              src="${exp.image}"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x500/060B16/F8FAFC?text=${encodeURIComponent(exp.title)}';"
+              alt="${exp.title}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent"></div>
+            <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider shadow ${badgeColor}">
+                ${exp.difficulty}
+              </span>
+              <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-slate-200 text-[11px] font-semibold border border-white/10">
+                ${exp.region}
+              </span>
+            </div>
+            <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-amber-400">
+                <i class="fa-solid fa-mountain"></i>
+                <span>${exp.elevation}</span>
+              </div>
+              <span class="text-xs font-semibold text-slate-200 bg-white/10 px-2.5 py-0.5 rounded-md backdrop-blur-sm">
+                ${exp.duration}
+              </span>
+            </div>
+          </div>
+
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-bold text-amber-400/90 uppercase tracking-wider mb-1">${exp.subtitle}</div>
+              <h3 class="font-display text-xl font-extrabold text-white uppercase leading-snug mb-2.5 group-hover:text-amber-400 transition">
+                ${exp.title}
+              </h3>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed line-clamp-3 mb-5">
+                ${exp.summary}
+              </p>
+            </div>
+
+            <div>
+              <div class="grid grid-cols-2 gap-3 py-3 border-y border-white/10 mb-4 text-xs">
+                <div>
+                  <span class="block text-slate-400 uppercase font-bold text-[10px]">Next Departure</span>
+                  <span class="font-bold text-slate-100 mt-0.5 block">${exp.nextDeparture}</span>
+                </div>
+                <div class="text-right">
+                  <span class="block text-slate-400 uppercase font-bold text-[10px]">Tuition</span>
+                  <span class="font-display text-lg font-extrabold text-white">${exp.price}</span>
+                </div>
+              </div>
+
+              <button
+                onclick="openExpeditionModal('${exp.id}')"
+                class="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-amber-500 hover:text-slate-950 text-white font-display uppercase tracking-wider text-xs font-extrabold transition flex items-center justify-center gap-2"
+              >
+                <span>View Itinerary &amp; Dates</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    // 6. RENDER EXPEDITION GRIDS
+    function renderExpeditions(list) {
+      const grid = document.getElementById('expeditionsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const counter = document.getElementById('resultsCount');
+
+      counter.textContent = `Showing ${list.length} Expedition${list.length === 1 ? '' : 's'}`;
+
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = list.map(createExpeditionCardHTML).join('');
+    }
+
+    function renderHomeFeatured() {
+      const homeGrid = document.getElementById('homeFeaturedGrid');
+      homeGrid.innerHTML = expeditionsData.slice(0, 6).map(createExpeditionCardHTML).join('');
+    }
+
+    // 7. FILTERING & HOME LAUNCHER
+    function applyFilters() {
+      const region = document.getElementById('filterRegion').value;
+      const difficulty = document.getElementById('filterDifficulty').value;
+      const activity = document.getElementById('filterActivity').value;
+
+      const filtered = expeditionsData.filter(exp => {
+        const matchRegion = region === 'all' || exp.region === region;
+        const matchDiff = difficulty === 'all' || exp.difficulty === difficulty;
+        const matchAct = activity === 'all' || exp.activity === activity;
+        return matchRegion && matchDiff && matchAct;
+      });
+
+      renderExpeditions(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById('filterRegion').value = 'all';
+      document.getElementById('filterDifficulty').value = 'all';
+      document.getElementById('filterActivity').value = 'all';
+      applyFilters();
+    }
+
+    function launchFinderToExpeditions() {
+      document.getElementById('filterRegion').value = document.getElementById('homeRegionSelect').value;
+      document.getElementById('filterDifficulty').value = document.getElementById('homeDifficultySelect').value;
+      document.getElementById('filterActivity').value = document.getElementById('homeActivitySelect').value;
+      applyFilters();
+      navigateTo('expeditions');
+    }
+
+    // 8. RENDER & FILTER CALENDAR SCHEDULE
+    function renderCalendar(statusFilter = 'all') {
+      const tbody = document.getElementById('calendarTableBody');
+      const rows = statusFilter === 'all'
+        ? calendarSchedule
+        : calendarSchedule.filter(r => r.status === statusFilter);
+
+      tbody.innerHTML = rows.map(row => {
+        let statusBadge = '';
+        if (row.status === 'Open') {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Open</span>`;
+        } else if (row.status === 'Filling Fast') {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Filling Fast</span>`;
+        } else {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Waitlist</span>`;
+        }
+
+        return `
+          <tr class="hover:bg-white/5 transition">
+            <td class="py-4 px-6">
+              <button onclick="openExpeditionModal('${row.id}')" class="font-bold text-white hover:text-amber-400 transition text-left">
+                ${row.name}
+              </button>
+            </td>
+            <td class="py-4 px-6 text-slate-300 whitespace-nowrap">${row.dates}</td>
+            <td class="py-4 px-6 text-slate-300">${row.guide}</td>
+            <td class="py-4 px-6 font-display font-extrabold text-white">${row.price}</td>
+            <td class="py-4 px-6 whitespace-nowrap">${statusBadge}</td>
+            <td class="py-4 px-6 text-right whitespace-nowrap">
+              <button
+                onclick="openBookingModal('${row.name} (${row.dates})')"
+                class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold transition"
+              >
+                ${row.status === 'Waitlist' ? 'Join Waitlist' : 'Reserve Spot'}
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterCalendarStatus(status) {
+      renderCalendar(status);
+    }
+
+    // 9. EXPEDITION ITINERARY MODAL
+    function openExpeditionModal(id) {
+      const exp = expeditionsData.find(e => e.id === id);
+      if (!exp) return;
+
+      const content = document.getElementById('itineraryModalContent');
+      content.innerHTML = `
+        <div class="relative h-64 sm:h-72 bg-slate-950">
+          <img
+            src="${exp.image}"
+            onerror="this.onerror=null;this.src='https://placehold.co/1000x500/060B16/F8FAFC?text=${encodeURIComponent(exp.title)}';"
+            alt="${exp.title}"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white">
+            <span class="px-3 py-1 rounded-full bg-amber-500 text-slate-950 text-xs font-extrabold uppercase tracking-wider">
+              ${exp.region} &bull; ${exp.difficulty}
+            </span>
+            <h2 class="font-display text-3xl sm:text-4xl font-extrabold uppercase mt-2">${exp.title}</h2>
+            <p class="text-slate-200 text-sm">${exp.subtitle}</p>
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-8">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-950/80 border border-white/10 mb-8 text-xs">
+            <div>
+              <span class="text-slate-400 uppercase font-bold block">Summit Elevation</span>
+              <span class="text-white font-bold text-sm mt-0.5 block">${exp.elevation}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 uppercase font-bold block">Duration</span>
+              <span class="text-white font-bold text-sm mt-0.5 block">${exp.duration}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 uppercase font-bold block">Guide Ratio</span>
+              <span class="text-white font-bold text-sm mt-0.5 block">${exp.ratio}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 uppercase font-bold block">Tuition</span>
+              <span class="text-amber-400 font-display font-extrabold text-lg block">${exp.price}</span>
+            </div>
+          </div>
+
+          <h3 class="font-display text-xl font-bold text-white uppercase mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-route text-amber-400"></i>
+            <span>Day-by-Day Expedition Itinerary</span>
+          </h3>
+          <div class="space-y-4 mb-8 border-l-2 border-amber-500/40 pl-5 ml-2">
+            ${exp.itinerary.map(step => `
+              <div class="relative">
+                <span class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-amber-500 ring-4 ring-amber-500/20"></span>
+                <div class="text-xs font-bold uppercase tracking-wider text-amber-400">${step.days}</div>
+                <h4 class="font-bold text-white text-base">${step.title}</h4>
+                <p class="text-slate-300 text-sm mt-0.5 leading-relaxed">${step.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="bg-slate-950 border border-white/10 p-6 rounded-2xl">
+            <h4 class="font-display text-lg font-bold text-white uppercase mb-1">Request Dossier or Reserve Your Roster Spot</h4>
+            <p class="text-slate-300 text-xs mb-4">Next scheduled departure: <strong class="text-amber-400">${exp.nextDeparture}</strong>. Coordinator: <strong class="text-white">sayyani wahaj</strong> (0313 3118712).</p>
+            <form onsubmit="handleModalQuickReserve(event, '${exp.title}')" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <input type="text" required placeholder="Your Full Name" class="px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/15 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400" />
+              <input type="email" required placeholder="Your Email Address" class="px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/15 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400" />
+              <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-display uppercase tracking-wider text-xs font-extrabold py-2.5 px-5 rounded-xl transition">
+                Reserve / Request Info
+              </button>
+            </form>
+          </div>
+        </div>
+      `;
+
+      openModal('itineraryModal');
+    }
+
+    // 10. LIVE SEARCH MODAL & UI HELPERS
+    function openSearchModal() {
+      openModal('searchModal');
+      const input = document.getElementById('liveSearchInput');
+      input.value = '';
+      runLiveSearch();
+      setTimeout(() => input.focus(), 100);
+    }
+
+    function runLiveSearch() {
+      const query = document.getElementById('liveSearchInput').value.toLowerCase().trim();
+      const resultsBox = document.getElementById('liveSearchResults');
+
+      const matches = expeditionsData.filter(exp =>
+        exp.title.toLowerCase().includes(query) ||
+        exp.subtitle.toLowerCase().includes(query) ||
+        exp.region.toLowerCase().includes(query) ||
+        exp.difficulty.toLowerCase().includes(query)
+      );
+
+      if (matches.length === 0) {
+        resultsBox.innerHTML = `<p class="text-sm text-slate-400 py-6 text-center">No peaks or expeditions matched "${query}".</p>`;
+        return;
+      }
+
+      resultsBox.innerHTML = matches.map(exp => `
+        <button
+          onclick="closeModal('searchModal'); openExpeditionModal('${exp.id}')"
+          class="w-full py-3.5 px-2 flex items-center justify-between hover:bg-white/5 rounded-lg transition text-left"
+        >
+          <div>
+            <div class="font-bold text-white text-sm">${exp.title}</div>
+            <div class="text-xs text-slate-400">${exp.subtitle} &bull; ${exp.elevation}</div>
+          </div>
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">${exp.price} &rarr;</span>
+        </button>
+      `).join('');
+    }
+
+    function openModal(modalId) {
+      const el = document.getElementById(modalId);
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+
+    function closeModal(modalId) {
+      const el = document.getElementById(modalId);
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+
+    function openBookingModal(expeditionName) {
+      document.getElementById('bookingExpeditionInput').value = expeditionName;
+      openModal('bookingModal');
+    }
+
+    function openGearModal() {
+      openModal('gearModal');
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const icon = document.getElementById('mobileMenuIcon');
+      menu.classList.toggle('hidden');
+      icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 4500);
+    }
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const climb = document.getElementById('bookingExpeditionInput').value;
+      closeModal('bookingModal');
+      e.target.reset();
+      showToast(`Thank you! sayyani wahaj has received your expedition request for ${climb}.`);
+    }
+
+    function handleModalQuickReserve(e, title) {
+      e.preventDefault();
+      closeModal('itineraryModal');
+      showToast(`Expedition dossier & roster hold requested for ${title}. sayyani wahaj will contact you shortly.`);
+    }
+
+    function handleContactPageSubmit(e) {
+      e.preventDefault();
+      e.target.reset();
+      showToast('Your inquiry has been dispatched to sayyani wahaj (Aptech North Karachi)!');
+    }
+
+    window.addEventListener('click', (e) => {
+      ['itineraryModal', 'bookingModal', 'searchModal', 'gearModal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (e.target === modal) closeModal(id);
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initSnowCanvas();
+      renderHomeFeatured();
+      renderExpeditions(expeditionsData);
+      renderCalendar();
+
+      const bgVideo = document.getElementById('globalBgVideo');
+      if (bgVideo) {
+        bgVideo.play().catch(() => {});
+      }
+
+      const initialHash = window.location.hash.replace('#', '');
+      navigateTo(validPages.includes(initialHash) ? initialHash : 'home', false);
+    });
+  </script>
+</body>
+</html>
